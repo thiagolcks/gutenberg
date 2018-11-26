@@ -16,6 +16,7 @@ export { findSidebarPanelToggleButtonWithTitle } from './find-sidebar-panel-togg
 export { findSidebarPanelWithTitle } from './find-sidebar-panel-with-title';
 export { getAllBlocks } from './get-all-blocks';
 export { getAvailableBlockTransforms } from './get-available-block-transforms';
+export { getBlockTitle } from './get-block-title';
 export { getEditedPostContent } from './get-edited-post-content';
 export { hasBlockSwitcher } from './has-block-switcher';
 export { insertBlock } from './insert-block';
