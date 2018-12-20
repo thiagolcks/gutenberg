@@ -49,3 +49,6 @@ if ( ! function_exists( 'render_block_core_rss' ) ) {
 if ( ! function_exists( 'render_block_core_shortcode' ) ) {
 	require dirname( __FILE__ ) . '/../packages/block-library/src/shortcode/index.php';
 }
+if ( ! function_exists( 'render_block_core_embed_youtube' ) ) {
+	require dirname( __FILE__ ) . '/../packages/block-library/src/embed/youtube.php';
+}
