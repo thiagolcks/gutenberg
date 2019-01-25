@@ -575,8 +575,8 @@ export function isValidBlockContent( blockTypeOrName, attributes, expectedBlockC
 			'Block validation failed for `%s` (%o).\n\nExpected:\n\n%s\n\nActual:\n\n%s',
 			blockType.name,
 			blockType,
-			actualBlockContent,
-			expectedBlockContent
+			expectedBlockContent,
+			actualBlockContent
 		);
 	}
 
