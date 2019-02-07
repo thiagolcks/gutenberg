@@ -1,18 +1,18 @@
 <?php
 /**
- * Server-side rendering of the `core/archives` block.
+ * Server-side rendering of the `core-embed/youtube` block.
  *
  * @package WordPress
  */
 
 /**
- * Renders the `core/archives` block on server.
- *
- * @see WP_Widget_Archives
+ * Renders the `core-embed/youtube` block on server with support for extra embed
+ * options that are not available through oEmbed.
  *
  * @param array $attributes The block attributes.
+ * @param array $content The content rendered by oEmbed.
  *
- * @return string Returns the post content with archives added.
+ * @return string Returns the embedded content with extra options applied.
  */
 function render_block_core_embed_youtube( $attributes, $content ) {
 	$extra = '';
@@ -22,6 +22,9 @@ function render_block_core_embed_youtube( $attributes, $content ) {
 	if ( isset( $attributes['extraOptions']['autoplay'] ) && $attributes['extraOptions']['autoplay'] ) {
 		$extra .= '&autoplay=1';
 	}
+	if ( isset( $attributes['extraOptions']['relatedOnlyFromChannel'] ) && $attributes['extraOptions']['relatedOnlyFromChannel'] ) {
+		$extra .= '&rel=0';
+	}
 	if ( isset( $attributes['extraOptions']['start'] ) && $attributes['extraOptions']['start'] > 0 ) {
 		$extra .= '&start=' . intval( $attributes['extraOptions']['start'] );
 	}
@@ -30,7 +33,7 @@ function render_block_core_embed_youtube( $attributes, $content ) {
 }
 
 /**
- * Register archives block.
+ * Register youtube block so we can enhance the oEmbed rendered content.
  */
 function register_block_core_embed_youtube() {
 	register_block_type(
