@@ -317,6 +317,7 @@ export class RichText extends Component {
 	}
 
 	onBlur() {
+		this.setState( { start: undefined, end: undefined, selectedFormat: undefined } );
 		document.removeEventListener( 'selectionchange', this.onSelectionChange );
 	}
 
