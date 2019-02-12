@@ -525,10 +525,10 @@ function gutenberg_preload_api_request( $memo, $path ) {
  * @since 0.1.0
  */
 function gutenberg_register_vendor_scripts() {
-	$suffix = SCRIPT_DEBUG ? '' : '.min';
+	$suffix = true ? '' : '.min';
 
 	// Vendor Scripts.
-	$react_suffix = ( SCRIPT_DEBUG ? '.development' : '.production' ) . $suffix;
+	$react_suffix = ( true ? '.development' : '.production' ) . $suffix;
 
 	gutenberg_register_vendor_script(
 		'react',
@@ -540,7 +540,7 @@ function gutenberg_register_vendor_scripts() {
 		'https://unpkg.com/react-dom@16.6.3/umd/react-dom' . $react_suffix . '.js',
 		array( 'react' )
 	);
-	$moment_script = SCRIPT_DEBUG ? 'moment.js' : 'min/moment.min.js';
+	$moment_script = true ? 'moment.js' : 'min/moment.min.js';
 	gutenberg_register_vendor_script(
 		'moment',
 		'https://unpkg.com/moment@2.22.1/' . $moment_script,

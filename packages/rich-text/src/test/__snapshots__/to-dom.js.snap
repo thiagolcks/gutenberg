@@ -133,12 +133,18 @@ exports[`recordToDom should create a value without formatting 1`] = `
 exports[`recordToDom should create an empty value 1`] = `
 <React.Fragment>
   
+  <br
+    data-rich-text-padding="true"
+  />
 </React.Fragment>
 `;
 
 exports[`recordToDom should create an empty value from empty tags 1`] = `
 <React.Fragment>
   
+  <br
+    data-rich-text-padding="true"
+  />
 </React.Fragment>
 `;
 
@@ -214,6 +220,9 @@ exports[`recordToDom should handle empty list value 1`] = `
 <React.Fragment>
   <li>
     
+    <br
+      data-rich-text-padding="true"
+    />
   </li>
 </React.Fragment>
 `;
@@ -222,6 +231,9 @@ exports[`recordToDom should handle empty multiline value 1`] = `
 <React.Fragment>
   <p>
     
+    <br
+      data-rich-text-padding="true"
+    />
   </p>
 </React.Fragment>
 `;
@@ -431,6 +443,9 @@ exports[`recordToDom should preserve non breaking space 1`] = `
 exports[`recordToDom should remove padding 1`] = `
 <React.Fragment>
   
+  <br
+    data-rich-text-padding="true"
+  />
 </React.Fragment>
 `;
 

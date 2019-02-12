@@ -253,7 +253,7 @@ export function toTree( {
 		if (
 			isEditableTree &&
 			( nextCharacter === LINE_SEPARATOR || ! nextCharacter ) &&
-			i !== text.length
+			( i !== text.length || ! text.length )
 		) {
 			append( getParent( pointer ), padding );
 		}
