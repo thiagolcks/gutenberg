@@ -6,6 +6,9 @@ exports[`recordToDom should create a value with formatting 1`] = `
     data-rich-text-format-boundary="true"
   >
     test
+    <br
+      data-rich-text-padding="true"
+    />
   </em>
   
 </React.Fragment>
@@ -17,6 +20,9 @@ exports[`recordToDom should create a value with formatting for split tags 1`] = 
     data-rich-text-format-boundary="true"
   >
     test
+    <br
+      data-rich-text-padding="true"
+    />
   </em>
   
 </React.Fragment>
@@ -29,6 +35,9 @@ exports[`recordToDom should create a value with formatting with attributes 1`] =
     href="#"
   >
     test
+    <br
+      data-rich-text-padding="true"
+    />
   </a>
   
 </React.Fragment>
@@ -38,6 +47,10 @@ exports[`recordToDom should create a value with image object 1`] = `
 <React.Fragment>
   <img
     src=""
+  />
+  
+  <br
+    data-rich-text-padding="true"
   />
   
 </React.Fragment>
@@ -50,6 +63,9 @@ exports[`recordToDom should create a value with image object and formatting 1`] 
       src=""
     />
     
+    <br
+      data-rich-text-padding="true"
+    />
   </em>
   
 </React.Fragment>
@@ -64,6 +80,10 @@ exports[`recordToDom should create a value with image object and text after 1`] 
     te
   </em>
   st
+  <br
+    data-rich-text-padding="true"
+  />
+  
 </React.Fragment>
 `;
 
@@ -76,6 +96,9 @@ exports[`recordToDom should create a value with image object and text before 1`]
       src=""
     />
     
+    <br
+      data-rich-text-padding="true"
+    />
   </em>
   
 </React.Fragment>
@@ -88,6 +111,9 @@ exports[`recordToDom should create a value with nested formatting 1`] = `
       data-rich-text-format-boundary="true"
     >
       test
+      <br
+        data-rich-text-padding="true"
+      />
     </strong>
   </em>
   
@@ -97,6 +123,10 @@ exports[`recordToDom should create a value with nested formatting 1`] = `
 exports[`recordToDom should create a value without formatting 1`] = `
 <React.Fragment>
   test
+  <br
+    data-rich-text-padding="true"
+  />
+  
 </React.Fragment>
 `;
 
@@ -118,6 +148,9 @@ exports[`recordToDom should filter format boundary attributes 1`] = `
     data-rich-text-format-boundary="true"
   >
     test
+    <br
+      data-rich-text-padding="true"
+    />
   </strong>
   
 </React.Fragment>
@@ -127,6 +160,10 @@ exports[`recordToDom should handle br 1`] = `
 <React.Fragment>
   
   <br />
+  
+  <br
+    data-rich-text-padding="true"
+  />
   
 </React.Fragment>
 `;
@@ -139,6 +176,9 @@ exports[`recordToDom should handle br with formatting 1`] = `
     
     <br />
     
+    <br
+      data-rich-text-padding="true"
+    />
   </em>
   
 </React.Fragment>
@@ -149,6 +189,10 @@ exports[`recordToDom should handle br with text 1`] = `
   te
   <br />
   st
+  <br
+    data-rich-text-padding="true"
+  />
+  
 </React.Fragment>
 `;
 
@@ -159,6 +203,10 @@ exports[`recordToDom should handle double br 1`] = `
   
   <br />
   b
+  <br
+    data-rich-text-padding="true"
+  />
+  
 </React.Fragment>
 `;
 
@@ -185,8 +233,16 @@ exports[`recordToDom should handle middle empty list value 1`] = `
   </li>
   <li>
     
+    <br
+      data-rich-text-padding="true"
+    />
+    
   </li>
   <li>
+    
+    <br
+      data-rich-text-padding="true"
+    />
     
   </li>
 </React.Fragment>
@@ -196,18 +252,33 @@ exports[`recordToDom should handle multiline list value 1`] = `
 <React.Fragment>
   <li>
     one
+    <br
+      data-rich-text-padding="true"
+    />
     <ul>
       <li>
         a
+        <br
+          data-rich-text-padding="true"
+        />
       </li>
       <li>
         b
+        <br
+          data-rich-text-padding="true"
+        />
         <ol>
           <li>
             1
+            <br
+              data-rich-text-padding="true"
+            />
           </li>
           <li>
             2
+            <br
+              data-rich-text-padding="true"
+            />
           </li>
         </ol>
       </li>
@@ -215,6 +286,10 @@ exports[`recordToDom should handle multiline list value 1`] = `
   </li>
   <li>
     three
+    <br
+      data-rich-text-padding="true"
+    />
+    
   </li>
 </React.Fragment>
 `;
@@ -223,9 +298,16 @@ exports[`recordToDom should handle multiline value 1`] = `
 <React.Fragment>
   <p>
     one
+    <br
+      data-rich-text-padding="true"
+    />
   </p>
   <p>
     two
+    <br
+      data-rich-text-padding="true"
+    />
+    
   </p>
 </React.Fragment>
 `;
@@ -234,6 +316,10 @@ exports[`recordToDom should handle multiline value with element selection 1`] = 
 <React.Fragment>
   <li>
     one
+    <br
+      data-rich-text-padding="true"
+    />
+    
   </li>
 </React.Fragment>
 `;
@@ -242,8 +328,15 @@ exports[`recordToDom should handle multiline value with empty 1`] = `
 <React.Fragment>
   <p>
     one
+    <br
+      data-rich-text-padding="true"
+    />
   </p>
   <p>
+    
+    <br
+      data-rich-text-padding="true"
+    />
     
   </p>
 </React.Fragment>
@@ -254,6 +347,10 @@ exports[`recordToDom should handle nested empty list value 1`] = `
   <li>
     <ul>
       <li>
+        
+        <br
+          data-rich-text-padding="true"
+        />
         
       </li>
     </ul>
@@ -268,6 +365,10 @@ exports[`recordToDom should handle selection before br 1`] = `
   
   <br />
   b
+  <br
+    data-rich-text-padding="true"
+  />
+  
 </React.Fragment>
 `;
 
@@ -276,11 +377,17 @@ exports[`recordToDom should ignore formats at line separator 1`] = `
   <p>
     <em>
       one
+      <br
+        data-rich-text-padding="true"
+      />
     </em>
   </p>
   <p>
     <em>
       two
+      <br
+        data-rich-text-padding="true"
+      />
     </em>
     
   </p>
@@ -290,6 +397,10 @@ exports[`recordToDom should ignore formats at line separator 1`] = `
 exports[`recordToDom should preserve emoji 1`] = `
 <React.Fragment>
   🍒
+  <br
+    data-rich-text-padding="true"
+  />
+  
 </React.Fragment>
 `;
 
@@ -299,6 +410,9 @@ exports[`recordToDom should preserve emoji in formatting 1`] = `
     data-rich-text-format-boundary="true"
   >
     🍒
+    <br
+      data-rich-text-padding="true"
+    />
   </em>
   
 </React.Fragment>
@@ -307,6 +421,10 @@ exports[`recordToDom should preserve emoji in formatting 1`] = `
 exports[`recordToDom should preserve non breaking space 1`] = `
 <React.Fragment>
   test  test
+  <br
+    data-rich-text-padding="true"
+  />
+  
 </React.Fragment>
 `;
 
@@ -319,5 +437,9 @@ exports[`recordToDom should remove padding 1`] = `
 exports[`recordToDom should replace characters to format HTML with space 1`] = `
 <React.Fragment>
    
+  <br
+    data-rich-text-padding="true"
+  />
+  
 </React.Fragment>
 `;

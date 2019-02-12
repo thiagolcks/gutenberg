@@ -80,6 +80,14 @@ function getDeepestActiveFormat( value ) {
 	return activeFormats[ selectedFormat - 1 ];
 }
 
+const padding = {
+	type: 'br',
+	attributes: {
+		'data-rich-text-padding': 'true',
+	},
+	object: true,
+};
+
 export function toTree( {
 	value,
 	multilineTag,
@@ -116,6 +124,7 @@ export function toTree( {
 
 	for ( let i = 0; i < formatsLength; i++ ) {
 		const character = text.charAt( i );
+		const nextCharacter = text[ i + 1 ];
 		let characterFormats = formats[ i ];
 
 		// Set multiline tags in queue for building the tree.
@@ -196,6 +205,15 @@ export function toTree( {
 
 		// No need for further processing if the character is a line separator.
 		if ( character === LINE_SEPARATOR ) {
+			if (
+				isEditableTree &&
+				( nextCharacter === LINE_SEPARATOR || ! nextCharacter )
+			) {
+				pointer = append( getParent( pointer ), padding );
+				// Ensure pointer is text node.
+				pointer = append( getParent( pointer ), '' );
+			}
+
 			lastCharacterFormats = characterFormats;
 			lastCharacter = character;
 			continue;
@@ -230,6 +248,14 @@ export function toTree( {
 
 		if ( onEndIndex && end === i + 1 ) {
 			onEndIndex( tree, pointer );
+		}
+
+		if (
+			isEditableTree &&
+			( nextCharacter === LINE_SEPARATOR || ! nextCharacter ) &&
+			i !== text.length
+		) {
+			append( getParent( pointer ), padding );
 		}
 
 		lastCharacterFormats = characterFormats;
