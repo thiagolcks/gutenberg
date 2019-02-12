@@ -38,6 +38,12 @@ function createPathToNode( node, rootNode, path ) {
 	return path;
 }
 
+function prepareFormats( prepareEditableTree = [], value ) {
+	return prepareEditableTree.reduce( ( accumlator, fn ) => {
+		return fn( accumlator, value.text );
+	}, value.formats );
+}
+
 /**
  * Create an HTML string from a Rich Text value. If a `multilineTag` is
  * provided, text separated by a line separator will be wrapped in it.
@@ -54,12 +60,16 @@ export function toElement( {
 	value,
 	multilineTag,
 	multilineWrapperTags,
+	prepareEditableTree,
 } ) {
 	let startPath = [];
 	let endPath = [];
 
 	const tree = toTree( {
-		value,
+		value: {
+			...value,
+			formats: prepareFormats( prepareEditableTree, value ),
+		},
 		multilineTag,
 		multilineWrapperTags,
 		createEmpty,

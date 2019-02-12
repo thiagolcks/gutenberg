@@ -33,7 +33,6 @@ import {
 	insertLineBreak,
 	insertLineSeparator,
 	isEmptyLine,
-	unstableToDom,
 	getSelectionStart,
 	getSelectionEnd,
 	remove,
@@ -105,7 +104,6 @@ export class RichText extends Component {
 		this.isEmpty = this.isEmpty.bind( this );
 		this.valueToFormat = this.valueToFormat.bind( this );
 		this.setRef = this.setRef.bind( this );
-		this.valueToEditableHTML = this.valueToEditableHTML.bind( this );
 		this.handleHorizontalNavigation = this.handleHorizontalNavigation.bind( this );
 
 		this.formatToValue = memize( this.formatToValue.bind( this ), { size: 1 } );
@@ -760,15 +758,6 @@ export class RichText extends Component {
 		return value;
 	}
 
-	valueToEditableHTML( value ) {
-		return unstableToDom( {
-			value,
-			multilineTag: this.multilineTag,
-			multilineWrapperTags: this.multilineWrapperTags,
-			prepareEditableTree: this.props.prepareEditableTree,
-		} ).body.innerHTML;
-	}
-
 	/**
 	 * Removes editor only formats from the value.
 	 *
@@ -800,12 +789,15 @@ export class RichText extends Component {
 
 		// Handle deprecated `children` and `node` sources.
 		if ( this.usedDeprecatedChildrenSource ) {
-			return children.fromDOM( unstableToDom( {
+			const { body } = document.implementation.createHTMLDocument( '' );
+
+			body.innerHTML = toHTMLString( {
 				value,
 				multilineTag: this.multilineTag,
 				multilineWrapperTags: this.multilineWrapperTags,
-				isEditableTree: false,
-			} ).body.childNodes );
+			} );
+
+			return children.fromDOM( body.childNodes );
 		}
 
 		if ( this.props.format === 'string' ) {

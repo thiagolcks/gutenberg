@@ -24,7 +24,7 @@ export { insertLineSeparator } from './insert-line-separator';
 export { insertObject } from './insert-object';
 export { slice } from './slice';
 export { split } from './split';
-export { toDom as unstableToDom, applySelection } from './to-dom';
+export { applySelection } from './to-dom';
 export { toElement } from './to-element';
 export { toHTMLString } from './to-html-string';
 export { toggleFormat } from './toggle-format';
