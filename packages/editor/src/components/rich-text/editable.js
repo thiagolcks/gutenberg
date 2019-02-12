@@ -143,8 +143,8 @@ export default class Editable extends Component {
 
 		const { element, selection } = toElement( {
 			value,
-			multilineTag: this.multilineTag,
-			multilineWrapperTags: this.multilineWrapperTags,
+			multilineTag: this.props.multilineTag,
+			multilineWrapperTags: this.props.multilineWrapperTags,
 		} );
 
 		this.selection = selection;

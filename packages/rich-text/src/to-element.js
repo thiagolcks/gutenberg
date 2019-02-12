@@ -1,10 +1,13 @@
 /**
+ * External dependencies
+ */
+
+import { omit } from 'lodash';
+
+/**
  * WordPress dependencies
  */
 
-import {
-	escapeHTML,
-} from '@wordpress/escape-html';
 import { createElement, Fragment } from '@wordpress/element';
 
 /**
@@ -132,17 +135,21 @@ function remove( object ) {
 }
 
 function createElementHTML( { type, attributes = {}, object, children }, index ) {
-	attributes.key = index;
+	const props = {
+		key: index,
+		className: attributes.class,
+		...omit( attributes, 'class' ),
+	};
 
 	if ( object ) {
-		return createElement( type, attributes );
+		return createElement( type, props );
 	}
 
-	return createElement( type, attributes, createChildrenHTML( children ) );
+	return createElement( type, props, createChildrenHTML( children ) );
 }
 
 function createChildrenHTML( children = [] ) {
 	return children.map( ( child, index ) => {
-		return child.text === undefined ? createElementHTML( child, index ) : escapeHTML( child.text );
+		return child.text === undefined ? createElementHTML( child, index ) : child.text;
 	} );
 }
