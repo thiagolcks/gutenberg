@@ -36,7 +36,7 @@
 						...state,
 						preview: {
 							html: action.preview,
-							provider: 'Twitter',
+							provider: 'Reddit',
 						},
 					};
 			}

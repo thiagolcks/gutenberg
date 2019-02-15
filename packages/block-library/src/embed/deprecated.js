@@ -16,7 +16,7 @@ import { RichText } from '@wordpress/editor';
 export const getEmbedDeprecatedMigrations = ( embedAttributes, options ) => {
 	const deprecated = [
 		{
-			embedAttributes,
+			attributes: embedAttributes,
 			save( { attributes } ) {
 				const { url, caption, type, providerNameSlug } = attributes;
 
@@ -38,14 +38,17 @@ export const getEmbedDeprecatedMigrations = ( embedAttributes, options ) => {
 			},
 		},
 	];
+
 	if ( undefined === options.save ) {
 		return deprecated;
 	}
+	const extraDeprecated = options.deprecated || [];
 	return [
+		...deprecated,
+		...extraDeprecated,
 		{
-			embedAttributes,
+			attributes: embedAttributes,
 			save: getEmbedSaveComponent( {} ),
 		},
-		...deprecated,
 	];
 };

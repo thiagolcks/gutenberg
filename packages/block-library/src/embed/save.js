@@ -32,8 +32,8 @@ export function getEmbedSaveComponent( options ) {
 		return (
 			<figure className={ embedClassName }>
 				<div className="wp-block-embed__wrapper">
-					{ customSave && customSave( attributes ) }
-					{ ! customSave && urlLine }
+					{ undefined !== customSave && customSave( attributes ) }
+					{ undefined === customSave && urlLine }
 				</div>
 				{ ! RichText.isEmpty( caption ) && <RichText.Content tagName="figcaption" value={ caption } /> }
 			</figure>
