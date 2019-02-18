@@ -8,7 +8,7 @@ import { getEmbedDeprecatedMigrations } from './deprecated';
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { compose } from '@wordpress/compose';
 import { withSelect, withDispatch } from '@wordpress/data';
 
@@ -48,7 +48,7 @@ export function getEmbedBlockSettings( options ) {
 		supports = {},
 	} = options;
 	// translators: %s: Name of service (e.g. VideoPress, YouTube)
-	const blockDescription = description || sprintf( __( 'Add a block that displays content pulled from other sites, like Twitter, Instagram or YouTube.' ), title );
+	const blockDescription = description || __( 'Add a block that displays content pulled from other sites, like Twitter, Instagram or YouTube.' );
 	const edit = getEmbedEditComponent( options );
 	const save = getEmbedSaveComponent( options );
 	const deprecated = getEmbedDeprecatedMigrations( embedAttributes, options );

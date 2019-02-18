@@ -66,7 +66,7 @@ export const settings = {
 
 	description: __( 'Prompt visitors to take action with a custom button.' ),
 
-	icon: <SVG viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><Path fill="none" d="M0 0h24v24H0V0z" /><G><Path d="M19 6H5L3 8v8l2 2h14l2-2V8l-2-2zm0 10H5V8h14v8z" /></G></SVG>,
+	icon: <SVG viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><Path fill="none" d="M0 0h24v24H0V0z" /><G><Path d="M19 6H5c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 10H5V8h14v8z" /></G></SVG>,
 
 	category: 'layout',
 
@@ -78,7 +78,7 @@ export const settings = {
 	},
 
 	styles: [
-		{ name: 'default', label: _x( 'Rounded', 'block style' ), isDefault: true },
+		{ name: 'default', label: _x( 'Default', 'block style' ), isDefault: true },
 		{ name: 'outline', label: __( 'Outline' ) },
 		{ name: 'squared', label: _x( 'Squared', 'block style' ) },
 	],
