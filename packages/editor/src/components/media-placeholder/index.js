@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { every, get, noop, startsWith, defaultTo } from 'lodash';
+import { every, get, isArray, noop, startsWith, defaultTo } from 'lodash';
 import classnames from 'classnames';
 
 /**
@@ -104,8 +104,20 @@ export class MediaPlaceholder extends Component {
 	}
 
 	onFilesUpload( files ) {
-		const { onSelect, multiple, onError, allowedTypes } = this.props;
-		const setMedia = multiple ? onSelect : ( [ media ] ) => onSelect( media );
+		const { addToGallery, onSelect, multiple, onError, allowedTypes, value = [] } = this.props;
+		let setMedia;
+		if ( multiple ) {
+			if ( addToGallery ) {
+				const currentValue = value;
+				setMedia = ( newMedia ) => {
+					onSelect( currentValue.concat( newMedia ) );
+				};
+			} else {
+				setMedia = onSelect;
+			}
+		} else {
+			setMedia = ( [ media ] ) => onSelect( media );
+		}
 		mediaUpload( {
 			allowedTypes,
 			filesList: files,
@@ -125,8 +137,11 @@ export class MediaPlaceholder extends Component {
 	render() {
 		const {
 			accept,
+			addToGallery,
 			icon,
+			isAppender,
 			className,
+			dropZoneUIOnly,
 			labels = {},
 			onSelect,
 			value = {},
@@ -137,26 +152,25 @@ export class MediaPlaceholder extends Component {
 			allowedTypes = [],
 			hasUploadPermissions,
 		} = this.props;
-
 		const {
 			isURLInputVisible,
 			src,
 		} = this.state;
 
-		let instructions = labels.instructions || '';
-		let title = labels.title || '';
+		let instructions = labels.instructions;
+		let title = labels.title;
 
 		if ( ! hasUploadPermissions && ! onSelectURL ) {
 			instructions = __( 'To edit this block, you need permission to upload media.' );
 		}
 
-		if ( ! instructions || ! title ) {
+		if ( instructions === undefined || title === undefined ) {
 			const isOneType = 1 === allowedTypes.length;
 			const isAudio = isOneType && 'audio' === allowedTypes[ 0 ];
 			const isImage = isOneType && 'image' === allowedTypes[ 0 ];
 			const isVideo = isOneType && 'video' === allowedTypes[ 0 ];
 
-			if ( ! instructions ) {
+			if ( instructions === undefined ) {
 				if ( hasUploadPermissions ) {
 					instructions = __( 'Drag a media file, upload a new one or select a file from your library.' );
 
@@ -180,7 +194,7 @@ export class MediaPlaceholder extends Component {
 				}
 			}
 
-			if ( ! title ) {
+			if ( title === undefined ) {
 				title = __( 'Media' );
 
 				if ( isAudio ) {
@@ -193,22 +207,43 @@ export class MediaPlaceholder extends Component {
 			}
 		}
 
+		const dropZone = (
+			<DropZone
+				onFilesDrop={ this.onFilesUpload }
+				onHTMLDrop={ onHTMLDrop }
+			/>
+		);
+
+		if ( dropZoneUIOnly ) {
+			return (
+				<MediaUploadCheck>
+					{ dropZone }
+				</MediaUploadCheck>
+			);
+		}
+
 		return (
 			<Placeholder
 				icon={ icon }
 				label={ title }
 				instructions={ instructions }
-				className={ classnames( 'editor-media-placeholder', className ) }
+				className={
+					classnames(
+						'editor-media-placeholder',
+						className,
+						{ 'is-appender': isAppender }
+					)
+				}
 				notices={ notices }
 			>
 				<MediaUploadCheck>
-					<DropZone
-						onFilesDrop={ this.onFilesUpload }
-						onHTMLDrop={ onHTMLDrop }
-					/>
+					{ dropZone }
 					<FormFileUpload
 						isLarge
-						className="editor-media-placeholder__button"
+						className={ classnames(
+							'editor-media-placeholder__button',
+							'editor-media-placeholder__upload-button'
+						) }
 						onChange={ this.onUpload }
 						accept={ accept }
 						multiple={ multiple }
@@ -216,20 +251,30 @@ export class MediaPlaceholder extends Component {
 						{ __( 'Upload' ) }
 					</FormFileUpload>
 					<MediaUpload
+						addToGallery={ addToGallery }
 						gallery={ multiple && this.onlyAllowsImages() }
 						multiple={ multiple }
 						onSelect={ onSelect }
 						allowedTypes={ allowedTypes }
-						value={ value.id }
-						render={ ( { open } ) => (
-							<Button
-								isLarge
-								className="editor-media-placeholder__button"
-								onClick={ open }
-							>
-								{ __( 'Media Library' ) }
-							</Button>
-						) }
+						value={
+							isArray( value ) ?
+								value.map( ( { id } ) => id ) :
+								value.id
+						}
+						render={ ( { open } ) => {
+							return (
+								<Button
+									isLarge
+									className={ classnames(
+										'editor-media-placeholder__button',
+										'editor-media-placeholder__media-library-button'
+									) }
+									onClick={ open }
+								>
+									{ __( 'Media Library' ) }
+								</Button>
+							);
+						} }
 					/>
 				</MediaUploadCheck>
 				{ onSelectURL && (

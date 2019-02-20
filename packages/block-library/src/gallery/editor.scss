@@ -53,48 +53,6 @@ ul.wp-block-gallery li {
 		}
 	}
 
-	&.block-library-gallery-add-item.block-library-gallery-add-item {
-		width: 100%;
-		min-height: 100px;
-		border: dotted;
-		border-color: $light-gray-800;
-		flex-direction: row;
-		justify-content: center;
-		align-items: center;
-
-		.dashicon {
-			margin-right: 6px;
-		}
-	}
-
-	.block-library-gallery-add-item__upload-button,
-	.block-library-gallery-add-item__media-library-button {
-		box-shadow: none;
-		&.components-button:hover,
-		&.components-button:focus {
-			box-shadow: none;
-			border: $border-width solid $dark-gray-500;
-		}
-	}
-
-	.block-library-gallery-add-item__upload-button {
-		border: none;
-		background: none;
-		box-shadow: none;
-		margin-right: 25px;
-		border: $border-width solid transparent;
-	}
-
-	.block-library-gallery-add-item__media-library-button {
-		background-color: $light-gray-100;
-		border: $border-width solid $light-gray-500;
-
-
-		.dashicon {
-			color: $light-gray-900;
-		}
-	}
-
 	.editor-rich-text figcaption {
 		a {
 			color: $white;
@@ -140,13 +98,3 @@ ul.wp-block-gallery li {
 	margin-left: -9px;
 }
 
-// Last item always needs margins reset.
-// When block is selected, only reset the right margin of the 2nd to last item.
-.wp-block-gallery {
-	.is-selected & .blocks-gallery-image:nth-last-child(2),
-	.is-selected & .blocks-gallery-item:nth-last-child(2),
-	.is-typing & .blocks-gallery-image:nth-last-child(2),
-	.is-typing & .blocks-gallery-item:nth-last-child(2) {
-		margin-right: 0;
-	}
-}

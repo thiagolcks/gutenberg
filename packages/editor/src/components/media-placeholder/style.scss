@@ -45,3 +45,25 @@
 .components-form-file-upload .editor-media-placeholder__button {
 	margin-right: $grid-size-small;
 }
+
+.editor-media-placeholder.is-appender {
+	min-height: 100px;
+	background-color: unset;
+	border: dotted;
+	border-color: $light-gray-800;
+
+	.editor-media-placeholder__upload-button {
+		box-shadow: none;
+		border: none;
+		background: none;
+		box-shadow: none;
+		margin-right: 25px;
+		border: $border-width solid transparent;
+		&.components-button:hover,
+		&.components-button:focus {
+			box-shadow: none;
+			border: $border-width solid $dark-gray-500;
+		}
+	}
+
+}
