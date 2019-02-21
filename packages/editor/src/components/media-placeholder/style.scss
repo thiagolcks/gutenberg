@@ -49,8 +49,11 @@
 .editor-media-placeholder.is-appender {
 	min-height: 100px;
 	background-color: unset;
-	border: dotted;
-	border-color: $light-gray-800;
+	outline: $border-width dashed $dark-gray-150;
+
+	&:hover {
+		outline: $border-width dashed $dark-gray-500;
+	}
 
 	.editor-media-placeholder__upload-button {
 		box-shadow: none;
