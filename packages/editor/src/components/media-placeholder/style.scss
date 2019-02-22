@@ -56,12 +56,7 @@
 	}
 
 	.editor-media-placeholder__upload-button {
-		box-shadow: none;
-		border: none;
-		background: none;
-		box-shadow: none;
-		margin-right: 25px;
-		border: $border-width solid transparent;
+		margin-right: $grid-size-small;
 		&.components-button:hover,
 		&.components-button:focus {
 			box-shadow: none;
