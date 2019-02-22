@@ -32,6 +32,15 @@ const MOCK_EMBED_RICH_SUCCESS_RESPONSE = {
 	version: '1.0',
 };
 
+const MOCK_EMBED_REDDIT_SUCCESS_RESPONSE = {
+	url: 'https://www.reddit.com/r/stevenuniverse/comments/8x2lsy/after_a_few_months_of_work_i_finally_finished/',
+	html: '<p>Mock success response.</p>',
+	type: 'rich',
+	provider_name: 'Reddit',
+	provider_url: 'https://reddit.com',
+	version: '1.0',
+};
+
 const MOCK_EMBED_VIDEO_SUCCESS_RESPONSE = {
 	url: 'https://www.youtube.com/watch?v=lXMskKTw3Bc',
 	html: '<iframe width="16" height="9"></iframe>',
@@ -70,6 +79,10 @@ const MOCK_RESPONSES = [
 	{
 		match: createEmbeddingMatcher( 'https://wordpress.org/gutenberg/handbook/block-api/attributes/' ),
 		onRequestMatch: createJSONResponse( MOCK_EMBED_WORDPRESS_SUCCESS_RESPONSE ),
+	},
+	{
+		match: createEmbeddingMatcher( 'https://www.reddit.com/r/stevenuniverse/comments/8x2lsy/after_a_few_months_of_work_i_finally_finished/' ),
+		onRequestMatch: createJSONResponse( MOCK_EMBED_REDDIT_SUCCESS_RESPONSE ),
 	},
 	{
 		match: createEmbeddingMatcher( 'https://www.youtube.com/watch?v=lXMskKTw3Bc' ),
