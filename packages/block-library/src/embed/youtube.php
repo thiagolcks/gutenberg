@@ -39,8 +39,7 @@ function register_block_core_embed_youtube() {
 	register_block_type(
 		'core-embed/youtube',
 		array(
-			'attributes'      => array(
-			),
+			'attributes'      => array(),
 			'render_callback' => 'render_block_core_embed_youtube',
 		)
 	);

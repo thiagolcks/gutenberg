@@ -16,9 +16,23 @@ function extend_embeds_preview() {
 }
 
 /**
+ * Initialise the custom preview API endpoint.
+ */
+function extend_embeds_rest_api_init() {
+	register_rest_route(
+		'extend-embeds/v1',
+		'/preview/',
+		array(
+			'methods'  => 'GET',
+			'callback' => 'extend_embeds_preview',
+		)
+	);
+}
+
+/**
  * Registers a custom script for the plugin.
  */
-function init_extend_embeds() {
+function extend_embeds_init() {
 	wp_enqueue_script(
 		'gutenberg-test-extend-embeds',
 		plugins_url( 'extend-embeds/index.js', __FILE__ ),
@@ -30,12 +44,7 @@ function init_extend_embeds() {
 		filemtime( plugin_dir_path( __FILE__ ) . 'extend-embeds/index.js' ),
 		true
 	);
-	add_action( 'rest_api_init', function () {
-		register_rest_route( 'extend-embeds/v1', '/preview/', array(
-			'methods' => 'GET',
-			'callback' => 'extend_embeds_preview',
-		) );
-	} );
+	add_action( 'rest_api_init', 'extend_embeds_rest_api_init' );
 }
 
-add_action( 'init', 'init_extend_embeds' );
+add_action( 'init', 'extend_embeds_init' );
