@@ -24,6 +24,7 @@ export { isCurrentURL } from './is-current-url';
 export { loginUser } from './login-user';
 export { observeFocusLoss } from './observe-focus-loss';
 export { openDocumentSettingsSidebar } from './open-document-settings-sidebar';
+export { openGlobalInserter } from './open-global-inserter';
 export { openPublishPanel } from './open-publish-panel';
 export { pressKeyTimes } from './press-key-times';
 export { pressKeyWithModifier } from './press-key-with-modifier';
