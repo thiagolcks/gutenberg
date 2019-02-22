@@ -98,3 +98,6 @@ ul.wp-block-gallery li {
 	margin-left: -9px;
 }
 
+[data-type="core/gallery"].editor-block-list__block.is-hovered > .editor-block-list__block-edit::before {
+	margin-bottom: 16px;
+}
