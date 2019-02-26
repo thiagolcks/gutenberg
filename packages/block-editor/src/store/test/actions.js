@@ -121,12 +121,14 @@ describe( 'actions', () => {
 				clientId: 'ribs',
 			};
 
-			expect( replaceBlock( [ 'chicken' ], block ) ).toEqual( {
+			expect(
+				Array.from( replaceBlock( [ 'chicken' ], block, true ) )
+			).toEqual( [ {
 				type: 'REPLACE_BLOCKS',
 				clientIds: [ 'chicken' ],
 				blocks: [ block ],
 				time: expect.any( Number ),
-			} );
+			} ] );
 		} );
 	} );
 
@@ -136,12 +138,14 @@ describe( 'actions', () => {
 				clientId: 'ribs',
 			} ];
 
-			expect( replaceBlocks( [ 'chicken' ], blocks ) ).toEqual( {
+			expect(
+				Array.from( replaceBlocks( [ 'chicken' ], blocks, true ) )
+			).toEqual( [ {
 				type: 'REPLACE_BLOCKS',
 				clientIds: [ 'chicken' ],
 				blocks,
 				time: expect.any( Number ),
-			} );
+			} ] );
 		} );
 	} );
 
@@ -151,14 +155,16 @@ describe( 'actions', () => {
 				clientId: 'ribs',
 			};
 			const index = 5;
-			expect( insertBlock( block, index, 'testclientid' ) ).toEqual( {
+			expect(
+				Array.from( insertBlock( block, index, 'testclientid', true, true ) )
+			).toEqual( [ {
 				type: 'INSERT_BLOCKS',
 				blocks: [ block ],
 				index,
 				rootClientId: 'testclientid',
 				time: expect.any( Number ),
 				updateSelection: true,
-			} );
+			} ] );
 		} );
 	} );
 
@@ -168,14 +174,16 @@ describe( 'actions', () => {
 				clientId: 'ribs',
 			} ];
 			const index = 3;
-			expect( insertBlocks( blocks, index, 'testclientid' ) ).toEqual( {
+			expect(
+				Array.from( insertBlocks( blocks, index, 'testclientid', true, true ) )
+			).toEqual( [ {
 				type: 'INSERT_BLOCKS',
 				blocks,
 				index,
 				rootClientId: 'testclientid',
 				time: expect.any( Number ),
 				updateSelection: true,
-			} );
+			} ] );
 		} );
 	} );
 
