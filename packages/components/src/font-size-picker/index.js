@@ -42,6 +42,8 @@ function FontSizePicker( {
 	const currentFontSizeName = ( currentFont && currentFont.name ) || ( ! value && _x( 'Normal', 'font size name' ) ) || _x( 'Custom', 'font size name' );
 
 	return (
+		// Todo: Refactor the code to remove the need for disable
+		// eslint-disable-next-line @wordpress/no-base-control-with-label-without-id
 		<BaseControl label={ __( 'Font Size' ) }>
 			<div className="components-font-size-picker__buttons">
 				{ ( fontSizes.length > 0 ) &&

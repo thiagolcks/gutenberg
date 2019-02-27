@@ -40,6 +40,8 @@ export function ColorPaletteControl( {
 	);
 
 	return (
+		// Todo: Refactor the code to remove the need for disable
+		// eslint-disable-next-line @wordpress/no-base-control-with-label-without-id
 		<BaseControl
 			className="editor-color-palette-control"
 			label={ labelElement }>
