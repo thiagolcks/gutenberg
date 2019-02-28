@@ -3,7 +3,6 @@
  */
 import { getBlobByURL, isBlobURL } from '@wordpress/blob';
 import {
-	BaseControl,
 	Button,
 	Disabled,
 	IconButton,
@@ -211,10 +210,12 @@ class VideoEdit extends Component {
 							] }
 						/>
 						<MediaUploadCheck>
-							<BaseControl
+							<div
 								className="editor-video-poster-control"
-								label={ __( 'Poster Image' ) }
 							>
+								<span>
+									{ __( 'Poster Image' ) }
+								</span>
 								<MediaUpload
 									title={ __( 'Select Poster Image' ) }
 									onSelect={ this.onSelectPoster }
@@ -234,7 +235,7 @@ class VideoEdit extends Component {
 										{ __( 'Remove Poster Image' ) }
 									</Button>
 								}
-							</BaseControl>
+							</div>
 						</MediaUploadCheck>
 					</PanelBody>
 				</InspectorControls>
