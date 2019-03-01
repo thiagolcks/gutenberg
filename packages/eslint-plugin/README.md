@@ -53,6 +53,7 @@ Rule|Description
 [gutenberg-phase](docs/rules/gutenberg-phase.md)|Governs the use of the `process.env.GUTENBERG_PHASE` constant
 [no-unused-vars-before-return](/packages/eslint-plugin/docs/rules/no-unused-vars-before-return.md)|Disallow assigning variable values if unused before a return
 [valid-sprintf](/packages/eslint-plugin/docs/rules/valid-sprintf.md)|Disallow assigning variable values if unused before a return
+[no-base-control-with-label-without-id](/packages/eslint-plugin/docs/rules/no-base-control-with-label-without-id.md)| Disallow the usage of BaseControl component with a label prop set but omitting the id property.
 
 ### Legacy
 

@@ -11,6 +11,9 @@ import rule from '../no-base-control-with-label-without-id';
 const ruleTester = new RuleTester( {
 	parserOptions: {
 		ecmaVersion: 6,
+		ecmaFeatures: {
+			jsx: true,
+		},
 	},
 } );
 
@@ -24,9 +27,7 @@ ruleTester.run( 'no-base-control-with-label-without-id', rule, {
 			/>`,
 		},
 		{
-			code: `
-			<BaseControl
-			/>`,
+			code: `<BaseControl />`,
 		},
 		{
 			code: `
@@ -34,13 +35,13 @@ ruleTester.run( 'no-base-control-with-label-without-id', rule, {
 				label="ok"
 				id="my-id"
 			>
-				<b>Child</b>
+				<input id="my-id" />
 			</BaseControl>`,
 		},
 		{
 			code: `
 			<BaseControl>
-				<b>Child</b>
+				<input id="my-id" />
 			</BaseControl>`,
 		},
 		{
@@ -48,7 +49,7 @@ ruleTester.run( 'no-base-control-with-label-without-id', rule, {
 			<BaseControl
 				id="my-id"
 			>
-				<b>Child</b>
+				<input id="my-id" />
 			</BaseControl>`,
 		},
 	],
@@ -58,7 +59,7 @@ ruleTester.run( 'no-base-control-with-label-without-id', rule, {
 			<BaseControl
 				label="ok"
 			>
-				<b>Child</b>
+				<input id="my-id" />
 			</BaseControl>`,
 			errors: [ { message: 'When using BaseControl component if a label property is passed an id property should also be passed.' } ],
 		},
