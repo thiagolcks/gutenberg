@@ -116,36 +116,48 @@ describe( 'actions', () => {
 	} );
 
 	describe( 'replaceBlock', () => {
-		it( 'should return the REPLACE_BLOCKS action', () => {
+		it( 'should yield the REPLACE_BLOCKS action', () => {
 			const block = {
 				clientId: 'ribs',
 			};
 
 			expect(
 				Array.from( replaceBlock( [ 'chicken' ], block, true ) )
-			).toEqual( [ {
-				type: 'REPLACE_BLOCKS',
-				clientIds: [ 'chicken' ],
-				blocks: [ block ],
-				time: expect.any( Number ),
-			} ] );
+			).toEqual( [
+				{
+					type: 'REPLACE_BLOCKS',
+					clientIds: [ 'chicken' ],
+					blocks: [ block ],
+					time: expect.any( Number ),
+				},
+				select(
+					'core/block-editor',
+					'getBlockCount'
+				),
+			] );
 		} );
 	} );
 
 	describe( 'replaceBlocks', () => {
-		it( 'should return the REPLACE_BLOCKS action', () => {
+		it( 'should yield the REPLACE_BLOCKS action', () => {
 			const blocks = [ {
 				clientId: 'ribs',
 			} ];
 
 			expect(
 				Array.from( replaceBlocks( [ 'chicken' ], blocks, true ) )
-			).toEqual( [ {
-				type: 'REPLACE_BLOCKS',
-				clientIds: [ 'chicken' ],
-				blocks,
-				time: expect.any( Number ),
-			} ] );
+			).toEqual( [
+				{
+					type: 'REPLACE_BLOCKS',
+					clientIds: [ 'chicken' ],
+					blocks,
+					time: expect.any( Number ),
+				},
+				select(
+					'core/block-editor',
+					'getBlockCount'
+				),
+			] );
 		} );
 	} );
 

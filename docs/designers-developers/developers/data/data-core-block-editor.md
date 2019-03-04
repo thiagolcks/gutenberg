@@ -890,7 +890,7 @@ with one or more replacement blocks.
 
 ### moveBlockToPosition
 
-Returns an action object signalling that an indexed block should be moved
+Yields an action object signalling that an indexed block should be moved
 to a new index.
 
 *Parameters*

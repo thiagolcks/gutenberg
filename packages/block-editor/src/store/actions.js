@@ -13,25 +13,24 @@ import { getDefaultBlockName, createBlock } from '@wordpress/blocks';
  */
 import { select } from './controls';
 
-const buildSelectors = ( store ) => ( ...selectors ) => {
-	const buildSelector = ( selector ) => {
-		return ( ...args ) => (
-			select(
-				store,
-				selector,
-				...args,
-			)
-		);
-	};
-	if ( selectors.length > 1 ) {
-		return selectors.map( buildSelector );
-	}
-	if ( selectors.length === 1 ) {
-		return buildSelector( selectors[ 0 ] );
-	}
-};
+/**
+ * Generator which will yield a default block insertion action if there
+ * are no other blocks at the root of the editor. This is expected to be used
+ * in actions which may result in no blocks remaining in the editor (removal,
+ * replacement, etc).
+ */
+function* ensureDefaultBlock() {
+	const count = yield select(
+		'core/block-editor',
+		'getBlockCount',
+	);
 
-const buildCoreEditorSelectors = buildSelectors( 'core/editor' );
+	// To avoid a focus loss when removing the last block, assure there is
+	// always a default block if the last of the blocks have been removed.
+	if ( count === 0 ) {
+		yield insertDefaultBlock();
+	}
+}
 
 /**
  * Returns an action object used in signalling that blocks state should be
@@ -224,35 +223,45 @@ export function toggleSelection( isSelectionEnabled = true ) {
  * @param {?boolean}          ignoreAllowedBlocksValidation If true the blocks will replaced even if the replacement was not allowed e.g: because of allowed blocks restrictions.
  */
 export function* replaceBlocks( clientIds, blocks, ignoreAllowedBlocksValidation = false ) {
+	clientIds = castArray( clientIds );
+	blocks = castArray( blocks );
 	const createAction = () => ( {
 		type: 'REPLACE_BLOCKS',
-		clientIds: castArray( clientIds ),
-		blocks: castArray( blocks ),
+		clientIds,
+		blocks,
 		time: Date.now(),
 	} );
 	if ( ignoreAllowedBlocksValidation ) {
 		yield createAction();
+		yield* ensureDefaultBlock();
 		return;
 	}
-	const [
-		canInsertBlockType,
-		getBlockName,
-		getBlockRootClientId,
-	] =	buildCoreEditorSelectors( 'canInsertBlockType', 'getBlockName', 'getBlockRootClientId' );
-	const rootClientId = getBlockRootClientId( first( clientIds ) );
+	const rootClientId = yield select(
+		'core/block-editor',
+		'getBlockRootClientId',
+		first( clientIds )
+	);
 	// Replace is valid if the new blocks can be inserted in the root block
 	// or if we had a block of the same type in the position of the block being replaced.
 	for ( let index = 0; index < blocks.length; index++ ) {
 		const block = blocks[ index ];
-		if ( ! ( yield canInsertBlockType( block.name, rootClientId ) ) ) {
+		const canInsertBlock = yield select(
+			'core/block-editor',
+			'canInsertBlockType',
+			block.name,
+			rootClientId
+		);
+		if ( ! canInsertBlock ) {
 			const clientIdToReplace = clientIds[ index ];
-			const nameOfBlockToReplace = clientIdToReplace && ( yield getBlockName( clientIdToReplace ) );
+			const nameOfBlockToReplace = clientIdToReplace &&
+				( yield select( 'core/block-editor', 'getBlockName', 'clientIdToReplace' ) );
 			if ( ! nameOfBlockToReplace || nameOfBlockToReplace !== block.name ) {
 				return;
 			}
 		}
 	}
 	yield createAction();
+	yield* ensureDefaultBlock();
 }
 
 /**
@@ -291,7 +300,7 @@ export const moveBlocksDown = createOnMove( 'MOVE_BLOCKS_DOWN' );
 export const moveBlocksUp = createOnMove( 'MOVE_BLOCKS_UP' );
 
 /**
- * Returns an action object signalling that an indexed block should be moved
+ * Yields an action object signalling that an indexed block should be moved
  * to a new index.
  *
  * @param  {?string} clientId                      The client ID of the block.
@@ -300,7 +309,6 @@ export const moveBlocksUp = createOnMove( 'MOVE_BLOCKS_UP' );
  * @param  {number}  index                         The index to move the block into.
  * @param {?boolean} ignoreAllowedBlocksValidation If true the block will be moved even if the move was not allowed e.g: because of allowed blocks restrictions.
  *
- * @return {Object} Action object.
  */
 export function* moveBlockToPosition( clientId, fromRootClientId, toRootClientId, index, ignoreAllowedBlocksValidation = false ) {
 	const createAction = () => ( {
@@ -311,23 +319,41 @@ export function* moveBlockToPosition( clientId, fromRootClientId, toRootClientId
 		index,
 	} );
 	if ( ignoreAllowedBlocksValidation ) {
-		return createAction();
+		yield createAction();
+		return;
 	}
-	const [
-		canInsertBlockType,
-		getBlockName,
-		getTemplateLock,
-	] = buildCoreEditorSelectors( 'canInsertBlockType', 'getBlockName', 'getTemplateLock' );
 
-	const blockName = yield getBlockName( clientId );
+	const templateLock = yield select(
+		'core/block-editor',
+		'getTemplateLock',
+		fromRootClientId
+	);
 
-	// If locking is equal to all on the original clientId (fromRootClientId) it is not possible to move the block to any other position.
-	// In the other cases (locking !== all ), if moving inside the same block the move is always possible
-	// if moving to other parent block, the move is possible if we can insert a block of the same type inside the new parent block.
-	if (
-		( yield getTemplateLock( fromRootClientId ) ) !== 'all' &&
-		( fromRootClientId === toRootClientId || ( yield canInsertBlockType( blockName, toRootClientId ) ) )
-	) {
+	// If locking is equal to all on the original clientId (fromRootClientId),
+	// it is not possible to move the block to any other position.
+	if ( templateLock === 'all' ) {
+		return;
+	}
+	// If moving inside the same root block the move is always possible.
+	if ( fromRootClientId === toRootClientId ) {
+		yield createAction();
+	}
+
+	const blockName = yield select(
+		'core/block-editor',
+		'getBlockName',
+		clientId
+	);
+
+	const canInsertBlock = yield select(
+		'core/block-editor',
+		'canInsertBlockType',
+		blockName,
+		toRootClientId
+	);
+
+	// If moving to other parent block, the move is possible if we can insert a block of the same type inside the new parent block.
+	if ( canInsertBlock ) {
 		yield createAction();
 	}
 }
@@ -377,15 +403,20 @@ export function* insertBlocks(
 	updateSelection = true,
 	ignoreAllowedBlocksValidation = false
 ) {
+	blocks = castArray( blocks );
 	let allowedBlocks;
 	if ( ignoreAllowedBlocksValidation ) {
 		allowedBlocks = blocks;
 	} else {
 		allowedBlocks = [];
-		const canInsertBlockType = buildCoreEditorSelectors( 'canInsertBlockType' );
-		for ( const block of castArray( blocks ) ) {
+		for ( const block of blocks ) {
 			if ( block ) {
-				const isValid = yield canInsertBlockType( block.name, rootClientId );
+				const isValid = yield select(
+					'core/block-editor',
+					'canInsertBlockType',
+					block.name,
+					rootClientId
+				);
 				if ( isValid ) {
 					allowedBlocks.push( block );
 				}
@@ -493,16 +524,9 @@ export function* removeBlocks( clientIds, selectPrevious = true ) {
 		clientIds,
 	};
 
-	const count = yield select(
-		'core/block-editor',
-		'getBlockCount',
-	);
-
 	// To avoid a focus loss when removing the last block, assure there is
 	// always a default block if the last of the blocks have been removed.
-	if ( count === 0 ) {
-		yield insertDefaultBlock();
-	}
+	yield* ensureDefaultBlock();
 }
 
 /**
