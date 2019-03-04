@@ -5,6 +5,10 @@
 	.components-base-control__field {
 		margin-bottom: $grid-size;
 
+		& > *:first-child {
+			margin-bottom: $grid-size-small;
+		}
+
 		.components-panel__row & {
 			margin-bottom: inherit;
 		}
@@ -12,7 +16,7 @@
 
 	.components-base-control__label {
 		display: block;
-		margin-bottom: $grid-size-small;
+
 	}
 
 	.components-base-control__help {

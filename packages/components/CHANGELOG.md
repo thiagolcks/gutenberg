@@ -9,6 +9,7 @@
 - `withFilters` has been optimized to avoid binding hook handlers for each mounted instance of the component, instead using a single centralized hook delegator.
 - `withFilters` has been optimized to reuse a single shared component definition for all filtered instances of the component.
 - Make `RangeControl` validate min and max properties.
+- Added a margin-bottom to the first dom child inside `BaseControl`, previously only the dom element representing the label contained the margin.
 
 ### Bug Fixes
 
