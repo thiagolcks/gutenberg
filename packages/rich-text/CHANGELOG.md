@@ -7,6 +7,11 @@
 - Removed the `createLinePadding` from `apply`, which is now built in.
 - Improved format placeholder.
 - Improved dom diffing.
+- Remove undocumented functions:
+  * `charAt`
+  * `getSelectionStart`
+  * `getSelectionEnd`
+  * `insertLineBreak`
 
 ## 3.0.4 (2019-01-03)
 

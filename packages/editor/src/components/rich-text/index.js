@@ -33,17 +33,13 @@ import {
 	toHTMLString,
 	getTextContent,
 	insert,
-	insertLineBreak,
 	insertLineSeparator,
 	isEmptyLine,
 	unstableToDom,
-	getSelectionStart,
-	getSelectionEnd,
 	remove,
 	removeFormat,
 	isCollapsed,
 	LINE_SEPARATOR,
-	charAt,
 } from '@wordpress/rich-text';
 import { decodeEntities } from '@wordpress/html-entities';
 import { withFilters, IsolatedEventContainer } from '@wordpress/components';
@@ -596,8 +592,7 @@ export class RichText extends Component {
 
 		if ( keyCode === DELETE || keyCode === BACKSPACE ) {
 			const value = this.createRecord();
-			const start = getSelectionStart( value );
-			const end = getSelectionEnd( value );
+			const { start, end, text } = value;
 
 			// Always handle full content deletion ourselves.
 			if ( start === 0 && end !== 0 && end === value.text.length ) {
@@ -610,7 +605,7 @@ export class RichText extends Component {
 				let newValue;
 
 				if ( keyCode === BACKSPACE ) {
-					if ( charAt( value, start - 1 ) === LINE_SEPARATOR ) {
+					if ( text[ start - 1 ] === LINE_SEPARATOR ) {
 						newValue = remove(
 							value,
 							// Only remove the line if the selection is
@@ -619,7 +614,7 @@ export class RichText extends Component {
 							end
 						);
 					}
-				} else if ( charAt( value, end ) === LINE_SEPARATOR ) {
+				} else if ( text[ end ] === LINE_SEPARATOR ) {
 					newValue = remove(
 						value,
 						start,
@@ -656,14 +651,14 @@ export class RichText extends Component {
 
 			if ( this.multilineTag ) {
 				if ( event.shiftKey ) {
-					this.onChange( insertLineBreak( record ) );
+					this.onChange( insert( record, '\n' ) );
 				} else if ( this.onSplit && isEmptyLine( record ) ) {
 					this.onSplit( ...split( record ).map( this.valueToFormat ) );
 				} else {
 					this.onChange( insertLineSeparator( record ) );
 				}
 			} else if ( event.shiftKey || ! this.onSplit ) {
-				this.onChange( insertLineBreak( record ) );
+				this.onChange( insert( record, '\n' ) );
 			} else {
 				this.splitContent();
 			}

@@ -5,8 +5,6 @@ import { getBlockTransforms, findTransform } from '@wordpress/blocks';
 import {
 	remove,
 	applyFormat,
-	getTextContent,
-	getSelectionStart,
 	slice,
 } from '@wordpress/rich-text';
 
@@ -20,8 +18,7 @@ export function getPatterns( { onReplace, valueToFormat } ) {
 				return record;
 			}
 
-			const start = getSelectionStart( record );
-			const text = getTextContent( record );
+			const { start, text } = record;
 			const characterBefore = text.slice( start - 1, start );
 
 			if ( ! /\s/.test( characterBefore ) ) {
@@ -46,8 +43,7 @@ export function getPatterns( { onReplace, valueToFormat } ) {
 		},
 		( record ) => {
 			const BACKTICK = '`';
-			const start = getSelectionStart( record );
-			const text = getTextContent( record );
+			const { start, text } = record;
 			const characterBefore = text.slice( start - 1, start );
 
 			// Quick check the text for the necessary character.
