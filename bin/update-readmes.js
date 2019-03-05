@@ -26,7 +26,7 @@ const packages = [
 	'keycodes',
 	//'plugins',
 	//'priority-queue',
-	//'redux-routine',
+	'redux-routine',
 	'rich-text',
 	//'shortcode',
 	//'url',
