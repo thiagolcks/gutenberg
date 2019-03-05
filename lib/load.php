@@ -22,8 +22,8 @@ require dirname( __FILE__ ) . '/demo.php';
 require dirname( __FILE__ ) . '/widgets-page.php';
 
 /**
- * Discovers block files from the plugin built artifact, unregistering the
- * equivalent in core if already defined, then includes the block file.
+ * Substitutes the implementation of a core-registered block type, if exists,
+ * with the built result from the plugin.
  */
 function gutenberg_reregister_core_block_types() {
 	// Blocks directory may not exist if working from a fresh clone.
@@ -32,19 +32,25 @@ function gutenberg_reregister_core_block_types() {
 		return;
 	}
 
+	$block_names = array(
+		'archives.php'        => 'core/archives',
+		'block.php'           => 'core/block',
+		'calendar.php'        => 'core/calendar',
+		'categories.php'      => 'core/categories',
+		'latest-comments.php' => 'core/latest-comments',
+		'latest-posts.php'    => 'core/latest-posts',
+		'rss.php'             => 'core/rss',
+		'shortcode.php'       => 'core/shortcode',
+		'search.php'          => 'core/search',
+		'tag-cloud.php'       => 'core/tag-cloud',
+	);
+
 	$registry = WP_Block_Type_Registry::get_instance();
 
-	$files = scandir( $blocks_dir );
-	foreach ( $files as $file ) {
-		$parts = pathinfo( $file );
-
-		// Ignore all non-PHP files, subdirectories, path traversal.
-		if ( 'php' !== $parts['extension'] ) {
-			continue;
+	foreach ( $block_names as $file => $block_name ) {
+		if ( ! file_exists( $blocks_dir . $file ) ) {
+			return;
 		}
-
-		// Derive the assumed block name by file path.
-		$block_name = 'core/' . $parts['filename'];
 
 		if ( $registry->is_registered( $block_name ) ) {
 			$registry->unregister( $block_name );
