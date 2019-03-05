@@ -31,7 +31,7 @@ const packages = [
 	//'shortcode',
 	//'url',
 	//'viewport',
-	//'wordcount',
+	'wordcount',
 ];
 
 let aggregatedExitCode = 0;
