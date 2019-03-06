@@ -12,6 +12,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 // These files only need to be loaded if within a rest server instance
 // which this class will exist if that is the case.
 if ( class_exists( 'WP_REST_Controller' ) ) {
+	if ( ! class_exists( 'WP_REST_Sidebars_Controller' ) ) {
+		require dirname( __FILE__ ) . '/class-wp-rest-sidebars-controller.php';
+	}
+
 	require dirname( __FILE__ ) . '/rest-api.php';
 }
 

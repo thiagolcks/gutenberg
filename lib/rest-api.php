@@ -14,11 +14,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Registers the REST API routes needed by the Gutenberg editor.
  *
  * @since 2.8.0
- * @deprecated 5.0.0
  */
 function gutenberg_register_rest_routes() {
-	_deprecated_function( __FUNCTION__, '5.0.0' );
+	$sidebar_controller = new WP_REST_Sidebars_Controller();
+	$sidebar_controller->register_routes();
 }
+add_action( 'rest_api_init', 'gutenberg_register_rest_routes' );
 
 /**
  * Handle a failing oEmbed proxy request to try embedding as a shortcode.
