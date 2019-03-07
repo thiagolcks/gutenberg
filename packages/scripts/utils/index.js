@@ -6,6 +6,7 @@ const {
 	getCliArgs,
 	hasCliArg,
 	spawnScript,
+	cleanUpArgs,
 } = require( './cli' );
 const {
 	hasBabelConfig,
@@ -33,4 +34,5 @@ module.exports = {
 	hasPackageProp,
 	hasProjectFile,
 	spawnScript,
+	cleanUpArgs,
 };
